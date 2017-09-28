@@ -7,24 +7,50 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: true}));
 module.exports =  router;
 
-router.get('/allstudents', function(req, res, next){
+router.get('/students/all', function(req, res, next){
   Student.findAll().then(students => res.json(students));
 });
 
-router.get('/allteachers', function(req, res, next){
-  Teacher.findAll().then(teachers => res.json(teachers));
+router.get('/students/teacher/:id', function(req, res, next){
+  Student.findAll({ where: { teacherId: req.params.id}}).then(students => res.json(students));
 });
 
-router.post('/addstudent', function(req, res, next){
+router.get('/students/:id', function(req, res, next){
+  Student.findOne({ where: { id: req.params.id}}).then(student => res.json(student));
+});
+
+router.post('/students/add', function(req, res, next){
   Student.create({
     name: req.body.name,
     GPA: req.body.GPA
   }).then((student) => res.status(201).json(student));
 });
 
-router.post('/addteacher', function(req, res, next){
+router.delete('/students/:id', function(req, res, next){
+  Student.destroy({ where: { id: req.params.id }}).then(student => res.status(202).json(student));
+});
+
+router.get('/teachers/all', function(req, res, next){
+  Teacher.findAll().then(teachers => res.json(teachers));
+});
+
+router.get('/teachers/:id', function(req, res, next){
+  Teacher.findOne({ where: { id: req.params.id}}).then(teacher => res.json(teacher));
+});
+
+router.post('/teachers/add', function(req, res, next){
   Teacher.create({
     name: req.body.name,
     subject: req.body.subject
   }).then((teacher) => res.status(201).json(teacher));
 });
+
+
+
+/* TO DO
+ * - UPDATE STUDENT TEACHER
+ * - CREATE TEACHER IF STUDENT TEACHER UPDATE AND TEACHER DOESN'T EXIST
+ * - CREATE TWO DIFFERENT ROUTERS
+ *      - STUDENTS     - TEACHERS
+ * - add some hooks
+*/
