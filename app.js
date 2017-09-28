@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+app.use(require('./routes'));
 
 const db = require('./db').db;
 const Student = require('./db').Student;
@@ -11,7 +12,7 @@ app.get("/test", (req, res, next) => {
 	// Visit http://localhost:8080/test to see the message!
 	res.send("Hello GET Route!")
 })
-/* 
+/*
  Your Route Code Here
 */
 
