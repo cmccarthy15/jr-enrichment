@@ -19,5 +19,12 @@ router.post('/addstudent', function(req, res, next){
   Student.create({
     name: req.body.name,
     GPA: req.body.GPA
-  }).then((student) => res.status(304).json(student));
+  }).then((student) => res.status(201).json(student));
+});
+
+router.post('/addteacher', function(req, res, next){
+  Teacher.create({
+    name: req.body.name,
+    subject: req.body.subject
+  }).then((teacher) => res.status(201).json(teacher));
 });
