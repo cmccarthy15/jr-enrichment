@@ -17,11 +17,17 @@ const Student = db.define('student', {
 	letterGrade: {
 		type: Sequelize.VIRTUAL,
 		get () {
-			return String.fromCharCode(65 + (4 - Math.floor(this.GPA)));
-			// if (this.GPA > 3.0){ return 'A'; }
-			// else if (this.GPA > 2.0) { return 'B';}
-			// else if (this.GPA > 1.0) { return 'C';}
-			// else { return 'F';}
+			return ['F', 'D', 'C', 'B', 'A'][Math.floor(this.gpa)];
+			/* or return String.fromCharCode(65 + (4 - Math.floor(this.GPA)));
+			 * switch(Math.floor(this.gpa)){
+			 * case 4.0: return 'A'
+			 * case 3.0: return 'B'}
+			 * and so on
+			 *
+			*/
+			// in some cases you will want to write a separate function
+			// because you can't deal with associations inside of a virtual column
+			// these have to return an immediate value
 		}
 	}
 });
@@ -40,5 +46,6 @@ const Teacher = db.define('teacher', {
 });
 
 Teacher.hasMany(Student);
+Student.belongsTo(Teacher);
 
 module.exports = {db, Student, Teacher};

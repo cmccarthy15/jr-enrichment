@@ -7,6 +7,11 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: true}));
 module.exports =  router;
 
+// const studentRouter = require('./students');
+// const teacherRouter = require('./teachers');
+// router.use('/students', studentRouter);
+// router.use('/teachers', teacherRouter);
+
 router.get('/students/all', function(req, res, next){
   Student.findAll().then(students => res.json(students));
 });
